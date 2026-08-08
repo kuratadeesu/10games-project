@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>10 Games Project</title>
+  <style>
+    :root {
+      --bg-color: #f4f6f8;
+      --text-color: #333;
+      --primary-color: #4a90e2;
+      --card-bg: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #fff;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      cursor: pointer;
+    }
+
+    nav button {
+      background: none;
+      border: none;
+      font-size: 1rem;
+      margin-left: 1rem;
+      cursor: pointer;
+      color: var(--text-color);
+      font-weight: bold;
+    }
+
+    nav button:hover {
+      color: var(--primary-color);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border: none;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.2s;
+    }
+
+    .btn:hover {
+      background-color: #357abd;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem;
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      margin-bottom: 2rem;
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .game-card {
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+      text-align: center;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .game-card.disabled {
+      opacity: 0.6;
+    }
+
+    .game-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.8rem;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+
+    .badge.ready {
+      background-color: #e3f2fd;
+      color: #1976d2;
+    }
+
+    .badge.soon {
+      background-color: #eee;
+      color: #777;
+    }
+
+    /* ゲーム埋め込みエリア */
+    .game-screen {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .game-frame {
+      width: 100%;
+      height: 600px;
+      border: none;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .game-frame {
+        height: 520px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo" onclick="showPage('top')">🎮 10 Games Project</div>
+    <nav>
+      <button onclick="showPage('top')">ホーム</button>
+      <button onclick="showPage('list')">ゲーム一覧</button>
+    </nav>
+  </header>
+
+  <div class="container">
+    <!-- 🏠 トップページ -->
+    <section id="page-top" class="page active">
+      <div class="hero">
+        <h1>自作ゲーム 10個作る挑戦中！</h1>
+        <p>プログラミング初心者が作ったゲームを公開しています。</p>
+        <button class="btn" onclick="showPage('list')">ゲームで遊ぶ 🎮</button>
+      </div>
+
+      <h2>最新ゲーム</h2>
+      <div class="game-card">
+        <div>
+          <span class="badge ready">NEW!</span>
+          <div class="game-title">GAME 01: 30秒クリックゲーム</div>
+          <p>制限時間内にCLICK!をたくさん押そう！</p>
+        </div>
+        <button class="btn" onclick="showPage('game01')">プレイする</button>
+      </div>
+    </section>
+
+    <!-- 🎮 ゲーム一覧ページ -->
+    <section id="page-list" class="page">
+      <h2>ゲーム一覧</h2>
+      <div class="game-grid" id="game-grid-container"></div>
+    </section>
+
+    <!-- 🎮 GAME 01 プレイページ -->
+    <section id="page-game01" class="page">
+      <div class="game-screen">
+        <!-- iframeで game01/index.html を読み込む -->
+        <iframe class="game-frame" src="game01/index.html" title="GAME 01"></iframe>
+        <div style="margin-top: 1rem;">
+          <button class="btn" onclick="showPage('list')">一覧に戻る</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const games = [
+      { id: 'game01', title: 'GAME 01: クリックゲーム', desc: '制限時間内に目標をクリック！', ready: true },
+      { id: 'game02', title: 'GAME 02', desc: 'Coming Soon', ready: false },
+      { id: 'game03', title: 'GAME 03', desc: 'Coming Soon', ready: false },
+      { id: 'game04', title: 'GAME 04', desc: 'Coming Soon', ready: false },
+      { id: 'game05', title: 'GAME 05', desc: 'Coming Soon', ready: false },
+      { id: 'game06', title: 'GAME 06', desc: 'Coming Soon', ready: false },
+      { id: 'game07', title: 'GAME 07', desc: 'Coming Soon', ready: false },
+      { id: 'game08', title: 'GAME 08', desc: 'Coming Soon', ready: false },
+      { id: 'game09', title: 'GAME 09', desc: 'Coming Soon', ready: false },
+      { id: 'game10', title: 'GAME 10', desc: 'Coming Soon', ready: false },
+    ];
+
+    function showPage(pageId) {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(page => page.classList.remove('active'));
+      
+      const targetPage = document.getElementById(`page-${pageId}`);
+      if (targetPage) {
+        targetPage.classList.add('active');
+        window.scrollTo(0, 0);
+      }
+    }
+
+    function renderGameList() {
+      const container = document.getElementById('game-grid-container');
+      container.innerHTML = '';
+
+      games.forEach(game => {
+        const card = document.createElement('div');
+        card.className = `game-card ${game.ready ? '' : 'disabled'}`;
+        
+        const badge = game.ready 
+          ? '<span class="badge ready">完成！</span>' 
+          : '<span class="badge soon">Coming Soon</span>';
+        
+        const actionButton = game.ready 
+          ? `<button class="btn" onclick="showPage('${game.id}')">遊ぶ</button>`
+          : `<button class="btn" style="background-color: #ccc; cursor: not-allowed;" disabled>準備中</button>`;
+
+        card.innerHTML = `
+          <div>
+            ${badge}
+            <div class="game-title">${game.title}</div>
+            <p>${game.desc}</p>
+          </div>
+          ${actionButton}
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    renderGameList();
+  </script>
+</body>
+</html>

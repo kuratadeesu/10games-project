@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>10秒クリックゲーム</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="game">
+
+        <h1>10秒クリックゲーム</h1>
+
+        <p>制限時間内にCLICK!をたくさん押そう！</p>
+
+        <div id="info">
+
+            <div>
+                TIME
+                <span id="time">10</span>
+            </div>
+
+            <div>
+                SCORE
+                <span id="score">0</span>
+            </div>
+
+            <div>
+                HIGH SCORE
+                <span id="highScore">0</span>
+            </div>
+
+        </div>
+
+        <button id="startButton">START</button>
+
+        <div id="gameArea">
+            <button id="target">CLICK!</button>
+        </div>
+
+        <div id="result" class="hidden">
+
+            <div id="gameOver">GAME OVER</div>
+
+            <div id="finalScore">SCORE: 0</div>
+
+            <div id="finalHighScore">
+                HIGH SCORE: 0
+            </div>
+
+            <div id="newRecord">
+                NEW RECORD!
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

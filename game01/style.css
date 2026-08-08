@@ -1,0 +1,175 @@
+
+/* --------------------
+   全体
+-------------------- */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #222;
+    color: white;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+
+/* --------------------
+   ゲーム全体
+-------------------- */
+
+#game {
+    width: min(700px, 90vw);
+    margin: 20px auto;
+}
+
+h1 {
+    margin-top: 20px;
+    font-size: 36px;
+}
+
+p {
+    font-size: 20px;
+}
+
+
+/* --------------------
+   TIME / SCORE
+-------------------- */
+
+#info {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin: 30px 0;
+    font-size: 18px;
+}
+
+#info span {
+    display: block;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+
+/* --------------------
+   STARTボタン
+-------------------- */
+
+#startButton {
+    padding: 12px 30px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+/* --------------------
+   ゲームエリア
+-------------------- */
+
+#gameArea {
+    position: relative;
+
+    width: 100%;
+    height: 300px;
+
+    margin-top: 20px;
+
+    border: 3px solid white;
+    border-radius: 15px;
+
+    overflow: hidden;
+}
+
+
+/* --------------------
+   CLICK!ボタン
+-------------------- */
+
+#target {
+    padding: 20px 40px;
+
+    font-size: 28px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    border: none;
+    border-radius: 12px;
+}
+
+
+/* --------------------
+   結果画面
+-------------------- */
+
+#result {
+    margin-top: 20px;
+
+    min-height: 150px;
+
+    font-weight: bold;
+}
+
+#gameOver {
+    font-size: 32px;
+}
+
+#finalScore {
+    font-size: 24px;
+    margin-top: 10px;
+}
+
+#finalHighScore {
+    font-size: 20px;
+    margin-top: 8px;
+}
+
+#newRecord {
+    font-size: 24px;
+    margin-top: 10px;
+}
+
+
+/* --------------------
+   結果画面を隠す
+-------------------- */
+
+#result.hidden {
+    display: none;
+}
+
+
+/* --------------------
+   スマホ対応
+-------------------- */
+
+@media (max-width: 600px) {
+
+    #game {
+        width: 95vw;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    #info {
+        gap: 30px;
+    }
+
+    #info span {
+        font-size: 28px;
+    }
+
+    #gameArea {
+        height: 250px;
+    }
+
+}
