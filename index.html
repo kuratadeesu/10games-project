@@ -163,9 +163,14 @@
       border-radius: 8px;
     }
 
-    @media (max-width: 600px) {
-      .game-frame {
-        height: 520px;
+    /* 間違い探し（GAME 02）など縦長ゲーム用クラス */
+    .game-frame.tall {
+      height: 850px;
+    }
+
+    @media (max-width: 768px) {
+      .game-frame.tall {
+        height: 1000px;
       }
     }
   </style>
@@ -193,10 +198,10 @@
       <div class="game-card">
         <div>
           <span class="badge ready">NEW!</span>
-          <div class="game-title">GAME 01: 30秒クリックゲーム</div>
-          <p>制限時間内にCLICK!をたくさん押そう！</p>
+          <div class="game-title">GAME 02: 公園の間違い探し</div>
+          <p>制限時間内に7つの間違いを探し出そう！</p>
         </div>
-        <button class="btn" onclick="showPage('game01')">プレイする</button>
+        <button class="btn" onclick="showPage('game02')">プレイする</button>
       </div>
     </section>
 
@@ -209,8 +214,18 @@
     <!-- 🎮 GAME 01 プレイページ -->
     <section id="page-game01" class="page">
       <div class="game-screen">
-        <!-- iframeで game01/index.html を読み込む -->
         <iframe class="game-frame" src="game01/index.html" title="GAME 01"></iframe>
+        <div style="margin-top: 1rem;">
+          <button class="btn" onclick="showPage('list')">一覧に戻る</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 🎮 GAME 02 プレイページ（追加） -->
+    <section id="page-game02" class="page">
+      <div class="game-screen">
+        <!-- iframeで game02/index.html を読み込む -->
+        <iframe class="game-frame tall" src="game02/index.html" title="GAME 02"></iframe>
         <div style="margin-top: 1rem;">
           <button class="btn" onclick="showPage('list')">一覧に戻る</button>
         </div>
@@ -221,7 +236,7 @@
   <script>
     const games = [
       { id: 'game01', title: 'GAME 01: クリックゲーム', desc: '制限時間内に目標をクリック！', ready: true },
-      { id: 'game02', title: 'GAME 02', desc: 'Coming Soon', ready: false },
+      { id: 'game02', title: 'GAME 02: 間違い探し', desc: '制限時間内に間違いをクリック！', ready: true },
       { id: 'game03', title: 'GAME 03', desc: 'Coming Soon', ready: false },
       { id: 'game04', title: 'GAME 04', desc: 'Coming Soon', ready: false },
       { id: 'game05', title: 'GAME 05', desc: 'Coming Soon', ready: false },

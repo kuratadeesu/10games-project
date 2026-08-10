@@ -1,0 +1,270 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN",
+    "Yu Gothic", "Meiryo", sans-serif;
+  color: #24352a;
+  background: #eef7ed;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(255,255,255,.8), transparent 28%),
+    linear-gradient(135deg, #edf8e9, #dff0f5);
+}
+
+.game {
+  width: min(1180px, calc(100% - 28px));
+  margin: 0 auto;
+  padding: 28px 0 50px;
+}
+
+.header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+  opacity: .6;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.6rem, 4vw, 2.5rem);
+}
+
+.status {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.status span {
+  background: rgba(255,255,255,.8);
+  border: 1px solid rgba(36,53,42,.1);
+  border-radius: 999px;
+  padding: 8px 13px;
+  font-weight: 700;
+}
+
+.instructions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  background: rgba(255,255,255,.72);
+  border-radius: 18px;
+  padding: 12px 16px;
+  margin-bottom: 18px;
+}
+
+.instructions p {
+  margin: 0;
+}
+
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 16px;
+  background: #24352a;
+  color: white;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+.boards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.panel {
+  position: relative;
+}
+
+.panel-label {
+  position: absolute;
+  z-index: 5;
+  top: 12px;
+  left: 12px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.9);
+  font-weight: 900;
+  box-shadow: 0 3px 12px rgba(0,0,0,.12);
+}
+
+.picture {
+  position: relative;
+  overflow: hidden;
+  border: 5px solid white;
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(35, 65, 48, .16);
+  cursor: crosshair;
+  line-height: 0;
+}
+
+.picture img {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.markers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.marker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 52px;
+  border: 4px solid #ff3b30;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(255,255,255,.8), 0 4px 15px rgba(0,0,0,.2);
+  animation: pop .22s ease-out;
+}
+
+@keyframes pop {
+  from { transform: translate(-50%, -50%) scale(.3); opacity: 0; }
+  to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.message {
+  text-align: center;
+  min-height: 32px;
+  margin-top: 16px;
+  font-weight: 800;
+}
+
+.message.good {
+  color: #16824a;
+}
+
+.message.bad {
+  color: #d83a34;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(25, 40, 30, .55);
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-card {
+  width: min(420px, 100%);
+  padding: 32px;
+  text-align: center;
+  background: white;
+  border-radius: 26px;
+  box-shadow: 0 25px 70px rgba(0,0,0,.25);
+}
+
+.modal-card h2 {
+  margin: 0 0 8px;
+  font-size: 2.2rem;
+}
+
+.modal-card p {
+  margin: 8px 0;
+}
+
+.confetti {
+  font-size: 3rem;
+}
+
+@media (max-width: 760px) {
+  .header,
+  .instructions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .status {
+    justify-content: flex-start;
+  }
+
+  .boards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* お手つき（×）マークのスタイル */
+.miss-marker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  color: #ff3b30;
+  font-size: 36px;
+  font-weight: 900;
+  line-height: 1;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+  animation: missPop 0.6s ease-out forwards;
+}
+
+@keyframes missPop {
+  0% {
+    transform: translate(-50%, -50%) scale(0.3);
+    opacity: 0;
+  }
+  30% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1) translateY(-10px);
+    opacity: 0;
+  }
+}
+
+/* 答え合わせ用マーカー（青色・点線などで区別） */
+.marker.answer {
+  border: 4px dashed #007aff;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.8), 0 4px 15px rgba(0, 0, 0, 0.2);
+  animation: answerPop 0.4s ease-out;
+}
+
+/* 非表示切り替え用クラス（もし未定義なら） */
+.hidden {
+  display: none !important;
+}
+
+@keyframes answerPop {
+  from { transform: translate(-50%, -50%) scale(0.2); opacity: 0; }
+  to { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+}

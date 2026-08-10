@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>公園の間違い探し</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="game">
+    <header class="header">
+      <div>
+        <p class="eyebrow">SPOT THE DIFFERENCE</p>
+        <h1>🌳 公園の間違い探し</h1>
+      </div>
+      <div class="status">
+        <span>時間：<strong id="timer">30</strong>秒</span>
+        <span>見つけた：<strong id="foundCount">0</strong> / <strong id="totalCount">7</strong></span>
+        <span>ミス：<strong id="missCount">0</strong></span>
+
+      </div>
+    </header>
+
+    <section class="instructions">
+      <p>上下の絵を見比べて、<strong>7個の違い</strong>をクリックしよう！</p>
+      <button id="resetButton" type="button">もう一度遊ぶ</button>
+    </section>
+
+    <section class="boards" aria-label="間違い探しの絵">
+      <div class="panel">
+        <span class="panel-label">A</span>
+        <div class="picture" data-board="top">
+          <img src="assets/top.png" alt="公園の絵 A">
+          <div class="markers" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <span class="panel-label">B</span>
+        <div class="picture" data-board="bottom">
+          <img src="assets/bottom.png" alt="公園の絵 B">
+          <div class="markers" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <div id="message" class="message" role="status" aria-live="polite">
+      違うところを探してみよう！
+    </div>
+    <div style="text-align: center; margin-top: 10px;">
+      <button id="showAnswerButton" type="button" class="hidden">答えを見る</button>
+    </div>
+
+    <div id="clearModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="clearTitle">
+      <div class="modal-card">
+        <div class="confetti">🎉</div>
+        <h2 id="clearTitle">クリア！</h2>
+        <p>7個の間違いを全部見つけたよ！</p>
+        <p id="resultText"></p>
+        <button id="playAgainButton" type="button">スタート</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
