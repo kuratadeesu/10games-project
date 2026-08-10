@@ -102,8 +102,8 @@ button:hover {
 .panel-label {
   position: absolute;
   z-index: 5;
-  top: 12px;
-  left: 12px;
+  top: -18px;
+  left: 10px;
   display: grid;
   place-items: center;
   width: 34px;
@@ -112,6 +112,10 @@ button:hover {
   background: rgba(255,255,255,.9);
   font-weight: 900;
   box-shadow: 0 3px 12px rgba(0,0,0,.12);
+}
+
+.panel-label {
+  pointer-events: none; /* ラベルをすり抜けて画像をクリック可能にする */
 }
 
 .picture {
