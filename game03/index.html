@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>神経衰弱ゲーム</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <main class="game">
+
+    <h1>🃏 神経衰弱</h1>
+
+    <p class="subtitle">
+      同じカードを2枚そろえよう！
+    </p>
+
+
+    <!-- 難易度 -->
+    <div class="difficulty">
+
+      <p class="difficulty-title">
+        難易度
+      </p>
+
+      <div class="difficulty-buttons">
+
+        <button
+          class="difficulty-button active"
+          data-size="4"
+        >
+          🟢 かんたん
+        </button>
+
+        <button
+          class="difficulty-button"
+          data-size="6"
+        >
+          🟡 ふつう
+        </button>
+
+        <button
+          class="difficulty-button"
+          data-size="8"
+        >
+          🔴 むずかしい
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- ゲーム情報 -->
+    <div class="info">
+
+      <div class="info-box">
+        <span>手数</span>
+        <strong id="moves">0</strong>
+      </div>
+
+      <div class="info-box">
+        <span>タイム</span>
+        <strong id="timer">00:00</strong>
+      </div>
+
+      <div class="info-box">
+        <span>ベスト</span>
+        <strong id="best-score">--:--</strong>
+      </div>
+
+    </div>
+
+
+    <!-- ペア数 -->
+    <div class="pair-info">
+      ペア
+      <strong id="pairs">0</strong>
+      /
+      <strong id="total-pairs">8</strong>
+    </div>
+
+
+    <!-- ゲームボード -->
+    <div
+      id="game-board"
+      class="game-board size-4"
+    ></div>
+
+
+    <!-- リスタート -->
+    <button
+      id="restart-button"
+      class="restart-button"
+    >
+      🔄 もう一度遊ぶ
+    </button>
+
+  </main>
+
+
+  <!-- クリア画面 -->
+  <div
+    id="clear-modal"
+    class="modal hidden"
+  >
+
+    <div class="modal-content">
+
+      <div class="clear-icon">
+        🎉
+      </div>
+
+      <h2>
+        クリア！
+      </h2>
+
+      <p>
+
+        <span id="result-difficulty">
+          かんたん
+        </span>
+
+        をクリアしました！
+
+      </p>
+
+
+      <div class="result">
+
+        <div class="result-item">
+          <span>手数</span>
+
+          <strong id="result-moves">
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="result-item">
+          <span>タイム</span>
+
+          <strong id="result-time">
+            00:00
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <p
+        id="new-record"
+        class="new-record hidden"
+      >
+        🏆 NEW RECORD!
+      </p>
+
+
+      <button
+        id="modal-restart"
+        class="restart-button"
+      >
+        もう一度遊ぶ
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
