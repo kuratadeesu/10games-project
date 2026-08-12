@@ -198,10 +198,10 @@
       <div class="game-card">
         <div>
           <span class="badge ready">NEW!</span>
-          <div class="game-title">GAME 03: 神経衰弱</div>
-          <p>制限時間内に同じカードを揃えよう！</p>
+          <div class="game-title">GAME 04: 数字早押し</div>
+          <p>制限時間内に数字を正しい順序でクリック！</p>
         </div>
-        <button class="btn" onclick="showPage('game03')">プレイする</button>
+        <button class="btn" onclick="showPage('game04')">プレイする</button>
       </div>
     </section>
 
@@ -244,12 +244,25 @@
     </section>
   </div>
 
+
+    <!-- 🎮 GAME 04 プレイページ（追加） -->
+    <section id="page-game04" class="page">
+      <div class="game-screen">
+        <!-- iframeで game04/index.html を読み込む -->
+        <iframe class="game-frame" src="game04/index.html" title="GAME 04"></iframe>
+        <div style="margin-top: 1rem;">
+          <button class="btn" onclick="showPage('list')">一覧に戻る</button>
+        </div>
+      </div>
+    </section>
+  </div>  
+
   <script>
     const games = [
       { id: 'game01', title: 'GAME 01: クリックゲーム', desc: '制限時間内に目標をクリック！', ready: true },
       { id: 'game02', title: 'GAME 02: 間違い探し', desc: '制限時間内に間違いをクリック！', ready: true },
       { id: 'game03', title: 'GAME 03: 神経衰弱', desc: '制限時間内に同じカードを揃えよう！', ready: true },
-      { id: 'game04', title: 'GAME 04', desc: 'Coming Soon', ready: false },
+      { id: 'game04', title: 'GAME 04: 数字早押し', desc: '制限時間内に数字を正しい順序でクリック！', ready: true },
       { id: 'game05', title: 'GAME 05', desc: 'Coming Soon', ready: false },
       { id: 'game06', title: 'GAME 06', desc: 'Coming Soon', ready: false },
       { id: 'game07', title: 'GAME 07', desc: 'Coming Soon', ready: false },

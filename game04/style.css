@@ -1,0 +1,118 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 20px;
+}
+
+#info-panel {
+  margin-bottom: 20px;
+}
+
+#best-time {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #e67e22;
+  margin-bottom: 5px;
+}
+
+#timer {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+#target-num {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+/* ゲームのプレイ領域 */
+#game-area {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border: 3px solid #333;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 数字ボタン */
+.num-btn {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #4a90e2;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.1s, background-color 0.2s;
+}
+
+.num-btn:active {
+  transform: scale(0.95);
+}
+
+/* スタートボタン */
+#start-btn {
+  margin-top: 20px;
+  padding: 12px 28px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  background-color: #2ecc71;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#start-btn:hover {
+  background-color: #27ae60;
+}
+
+/* ミスタップ時の演出 */
+.wrong {
+  background-color: #e74c3c !important;
+}
+
+/* 自己ベスト表示エリアのレイアウト */
+#best-time-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+#best-time {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #e67e22;
+}
+
+/* リセットボタンのスタイル */
+#reset-btn {
+  padding: 3px 8px;
+  font-size: 0.8rem;
+  color: #666;
+  background-color: #e0e0e0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+#reset-btn:hover {
+  background-color: #d6d6d6;
+  color: #333;
+}
