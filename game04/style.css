@@ -1,91 +1,20 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: Arial, sans-serif;
   text-align: center;
   background-color: #f4f4f9;
   margin: 0;
-  padding: 20px;
+  padding: 15px;
+  touch-action: manipulation; /* スマホでのダブルタップ拡大防止 */
 }
 
 #info-panel {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
-#best-time {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #e67e22;
-  margin-bottom: 5px;
-}
-
-#timer {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #333;
-}
-
-#target-num {
-  font-size: 1.2rem;
-  color: #555;
-}
-
-/* ゲームのプレイ領域 */
-#game-area {
-  position: relative;
-  width: 400px;
-  height: 400px;
-  margin: 0 auto;
-  background-color: #ffffff;
-  border: 3px solid #333;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* 数字ボタン */
-.num-btn {
-  position: absolute;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background-color: #4a90e2;
-  color: white;
-  font-size: 1.5rem;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-  user-select: none;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-  transition: transform 0.1s, background-color 0.2s;
-}
-
-.num-btn:active {
-  transform: scale(0.95);
-}
-
-/* スタートボタン */
-#start-btn {
-  margin-top: 20px;
-  padding: 12px 28px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: white;
-  background-color: #2ecc71;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-#start-btn:hover {
-  background-color: #27ae60;
-}
-
-/* ミスタップ時の演出 */
-.wrong {
-  background-color: #e74c3c !important;
-}
-
-/* 自己ベスト表示エリアのレイアウト */
 #best-time-container {
   display: flex;
   justify-content: center;
@@ -100,7 +29,6 @@ body {
   color: #e67e22;
 }
 
-/* リセットボタンのスタイル */
 #reset-btn {
   padding: 3px 8px;
   font-size: 0.8rem;
@@ -109,10 +37,83 @@ body {
   border: 1px solid #ccc;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
 }
 
-#reset-btn:hover {
-  background-color: #d6d6d6;
+#target-num {
+  font-size: 1.2rem;
+  font-weight: bold;
   color: #333;
+  min-height: 1.5em;
+}
+
+#timer {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+/* 3×3 ゲーム盤面（レスポンシブ対応） */
+#game-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 2px;
+  width: 100%;
+  max-width: 360px; /* PCでの最大幅 */
+  aspect-ratio: 1 / 1; /* 正方形を維持 */
+  margin: 0 auto;
+  border: 3px solid #333;
+  background-color: #333;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* 各セルボタン */
+.cell-btn {
+  width: 100%;
+  height: 100%;
+  border: none;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.05s;
+}
+
+.cell-btn:active {
+  transform: scale(0.96);
+}
+
+/* スタートボタン */
+#start-btn {
+  margin-top: 20px;
+  padding: 12px 32px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  background-color: #2ecc71;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+#start-btn:hover {
+  background-color: #27ae60;
+}
+
+/* ミスタップ時のアニメーション */
+.wrong {
+  animation: shake 0.2s ease-in-out;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+  100% { transform: translateX(0); }
 }
