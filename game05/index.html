@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>コインキャッチ迷路</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>コインキャッチ迷路</h1>
+  
+  <div id="info">
+    <div>タイム: <span id="timer">0.00</span> 秒</div>
+    <div>ベスト: <span id="bestTimer">--.--</span> 秒</div>
+  </div>
+
+  <!-- スタート画面 -->
+  <div id="startScreen">
+    <p>「スタート」を押して迷路を生成します！</p>
+    <button class="main-btn" onclick="startGame()">スタート</button>
+  </div>
+
+  <!-- ゲーム画面 -->
+  <div id="gameScreen" style="display: none;">
+    <canvas id="mazeCanvas"></canvas>
+    <br>
+    <button class="sub-btn" onclick="startGame()">新しい迷路でリトライ</button>
+
+    <!-- 十字キー -->
+    <div id="controls">
+      <button class="dpad-btn" id="btn-up" data-dx="0" data-dy="-1">▲</button>
+      <button class="dpad-btn" id="btn-left" data-dx="-1" data-dy="0">◄</button>
+      <button class="dpad-btn" id="btn-right" data-dx="1" data-dy="0">►</button>
+      <button class="dpad-btn" id="btn-down" data-dx="0" data-dy="1">▼</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

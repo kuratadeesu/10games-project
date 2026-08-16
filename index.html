@@ -25,34 +25,61 @@
       line-height: 1.6;
     }
 
+    /* ヘッダーのスタイル調整 */
     header {
       background-color: #fff;
-      padding: 1rem 2rem;
+      padding: 0.8rem 1.5rem;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 10px;
     }
 
     .logo {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       font-weight: bold;
       color: var(--primary-color);
       cursor: pointer;
+      white-space: nowrap; /* 改行を防止 */
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
     }
 
     nav button {
       background: none;
       border: none;
-      font-size: 1rem;
-      margin-left: 1rem;
+      font-size: 0.95rem;
+      margin-left: 0.8rem;
       cursor: pointer;
       color: var(--text-color);
       font-weight: bold;
+      white-space: nowrap; /* 改行を防止 */
+      padding: 0.2rem 0.4rem;
     }
 
     nav button:hover {
       color: var(--primary-color);
+    }
+
+    /* スマホ（画面幅 600px 以下）用の調整 */
+    @media (max-width: 600px) {
+      header {
+        padding: 0.8rem 0.8rem;
+      }
+
+      .logo {
+        font-size: 1.05rem; /* スマホ用にフォントサイズを微調整 */
+      }
+
+      nav button {
+        font-size: 0.85rem;
+        margin-left: 0.4rem;
+        padding: 0.2rem 0.2rem;
+      }
     }
 
     .container {
@@ -198,10 +225,10 @@
       <div class="game-card">
         <div>
           <span class="badge ready">NEW!</span>
-          <div class="game-title">GAME 04: 数字早押し</div>
-          <p>制限時間内に数字を正しい順序でクリック！</p>
+          <div class="game-title">GAME 05: 迷路ゲーム</div>
+          <p>できるだけ早くコインをゲットしよう！</p>
         </div>
-        <button class="btn" onclick="showPage('game04')">プレイする</button>
+        <button class="btn" onclick="showPage('game05')">プレイする</button>
       </div>
     </section>
 
@@ -221,10 +248,9 @@
       </div>
     </section>
 
-    <!-- 🎮 GAME 02 プレイページ（追加） -->
+    <!-- 🎮 GAME 02 プレイページ -->
     <section id="page-game02" class="page">
       <div class="game-screen">
-        <!-- iframeで game02/index.html を読み込む -->
         <iframe class="game-frame tall" src="game02/index.html" title="GAME 02"></iframe>
         <div style="margin-top: 1rem;">
           <button class="btn" onclick="showPage('list')">一覧に戻る</button>
@@ -232,24 +258,30 @@
       </div>
     </section>
 
-    <!-- 🎮 GAME 03 プレイページ（追加） -->
+    <!-- 🎮 GAME 03 プレイページ -->
     <section id="page-game03" class="page">
       <div class="game-screen">
-        <!-- iframeで game03/index.html を読み込む -->
         <iframe class="game-frame" src="game03/index.html" title="GAME 03"></iframe>
         <div style="margin-top: 1rem;">
           <button class="btn" onclick="showPage('list')">一覧に戻る</button>
         </div>
       </div>
     </section>
-  </div>
 
-
-    <!-- 🎮 GAME 04 プレイページ（追加） -->
+    <!-- 🎮 GAME 04 プレイページ -->
     <section id="page-game04" class="page">
       <div class="game-screen">
-        <!-- iframeで game04/index.html を読み込む -->
         <iframe class="game-frame" src="game04/index.html" title="GAME 04"></iframe>
+        <div style="margin-top: 1rem;">
+          <button class="btn" onclick="showPage('list')">一覧に戻る</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 🎮 GAME 05 プレイページ -->
+    <section id="page-game05" class="page">
+      <div class="game-screen">
+        <iframe class="game-frame" src="game05/index.html" title="GAME 05"></iframe>
         <div style="margin-top: 1rem;">
           <button class="btn" onclick="showPage('list')">一覧に戻る</button>
         </div>
@@ -259,11 +291,11 @@
 
   <script>
     const games = [
-      { id: 'game01', title: 'GAME 01: クリックゲーム', desc: '制限時間内に目標をクリック！', ready: true },
-      { id: 'game02', title: 'GAME 02: 間違い探し', desc: '制限時間内に間違いをクリック！', ready: true },
-      { id: 'game03', title: 'GAME 03: 神経衰弱', desc: '制限時間内に同じカードを揃えよう！', ready: true },
-      { id: 'game04', title: 'GAME 04: 数字早押し', desc: '制限時間内に数字を正しい順序でクリック！', ready: true },
-      { id: 'game05', title: 'GAME 05', desc: 'Coming Soon', ready: false },
+      { id: 'game01', title: 'GAME 01: クリック', desc: '制限時間内に目標を何度もクリック！', ready: true },
+      { id: 'game02', title: 'GAME 02: 間違い探し', desc: 'できるだけ早く間違いをクリック！', ready: true },
+      { id: 'game03', title: 'GAME 03: 神経衰弱', desc: 'できるだけ早く同じカードを揃えよう！', ready: true },
+      { id: 'game04', title: 'GAME 04: 数字早押し', desc: 'できるだけ早く数字を正しい順序でクリック！', ready: true },
+      { id: 'game05', title: 'GAME 05: コインゲット', desc: 'できるだけ早くコインをゲットしよう！', ready: true },
       { id: 'game06', title: 'GAME 06', desc: 'Coming Soon', ready: false },
       { id: 'game07', title: 'GAME 07', desc: 'Coming Soon', ready: false },
       { id: 'game08', title: 'GAME 08', desc: 'Coming Soon', ready: false },
