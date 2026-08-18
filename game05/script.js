@@ -5,8 +5,9 @@ const bestTimerEl = document.getElementById("bestTimer");
 const startScreen = document.getElementById("startScreen");
 const gameScreen = document.getElementById("gameScreen");
 
-const cols = 25;
-const rows = 25;
+// 難易度調整：迷路のサイズを小さく（25 -> 15）
+const cols = 15;
+const rows = 15;
 const cellSize = 20;
 
 canvas.width = cols * cellSize;
@@ -23,6 +24,68 @@ let isGameStarted = false;
 // 連続移動用の管理オブジェクト
 let moveInterval = null;
 let activeKeys = new Set();
+
+// --------------------------------------------------
+// ドット絵データ (8x8ピクセル)
+// --------------------------------------------------
+// --------------------------------------------------
+// ドット絵データ (8x8ピクセル)
+// --------------------------------------------------
+// 人（ドット絵キャラクター）
+const PLAYER_SPRITE = [
+  [0, 1, 1, 1, 1, 1, 0, 0], // 1: 髪（茶色）
+  [0, 1, 2, 2, 2, 1, 0, 0], // 2: 肌色
+  [0, 2, 3, 2, 3, 2, 0, 0], // 3: 目（黒）
+  [0, 2, 2, 2, 2, 2, 0, 0],
+  [0, 4, 4, 4, 4, 4, 0, 0], // 4: 服（青）
+  [0, 2, 4, 4, 4, 2, 0, 0], // 両脇に手（肌色）
+  [0, 0, 5, 0, 5, 0, 0, 0], // 5: ズボン/靴（ダークネイビー）
+  [0, 0, 5, 0, 5, 0, 0, 0],
+];
+
+const PLAYER_PALETTE = {
+  1: "#78350f", // 髪（ブラウン）
+  2: "#fde047", // 肌（ウォームイエロー/ベージュ系）
+  3: "#1e293b", // 目（黒/ダークグレー）
+  4: "#2563eb", // 服（ブルー）
+  5: "#1e1b4b"  // ズボン/靴（ダークネイビー）
+};
+
+// コイン
+const COIN_SPRITE = [
+  [0, 0, 1, 1, 1, 1, 0, 0],
+  [0, 1, 2, 2, 2, 2, 1, 0],
+  [1, 2, 2, 3, 2, 2, 2, 1],
+  [1, 2, 3, 3, 2, 2, 2, 1],
+  [1, 2, 2, 3, 2, 2, 2, 1],
+  [1, 2, 2, 3, 2, 2, 2, 1],
+  [0, 1, 2, 2, 2, 2, 1, 0],
+  [0, 0, 1, 1, 1, 1, 0, 0],
+];
+const COIN_PALETTE = {
+  1: "#d97706", // 濃い黄色（枠線）
+  2: "#fbbf24", // 黄色（本体）
+  3: "#fef08a"  // ハイライト
+};
+
+// ドット絵を描画する汎用関数
+function drawPixelArt(sprite, palette, gridX, gridY) {
+  const pixelSize = cellSize / 8;
+  for (let r = 0; r < 8; r++) {
+    for (let c = 0; c < 8; c++) {
+      const colorCode = sprite[r][c];
+      if (colorCode !== 0) {
+        ctx.fillStyle = palette[colorCode];
+        ctx.fillRect(
+          gridX * cellSize + c * pixelSize,
+          gridY * cellSize + r * pixelSize,
+          pixelSize,
+          pixelSize
+        );
+      }
+    }
+  }
+}
 
 // ベストタイムの読み込み
 let bestTime = localStorage.getItem("mazeBestTime");
@@ -61,6 +124,7 @@ function generateMaze() {
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  // 壁と道の描画
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
       if (grid[r][c] === 1) {
@@ -70,15 +134,9 @@ function draw() {
     }
   }
 
-  ctx.fillStyle = "#FFD700";
-  ctx.beginPath();
-  ctx.arc((coin.x + 0.5) * cellSize, (coin.y + 0.5) * cellSize, cellSize * 0.35, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.fillStyle = "#007bff";
-  ctx.beginPath();
-  ctx.arc((player.x + 0.5) * cellSize, (player.y + 0.5) * cellSize, cellSize * 0.35, 0, Math.PI * 2);
-  ctx.fill();
+  // コインとプレイヤーをドット絵で描画
+  drawPixelArt(COIN_SPRITE, COIN_PALETTE, coin.x, coin.y);
+  drawPixelArt(PLAYER_SPRITE, PLAYER_PALETTE, player.x, player.y);
 }
 
 function startGame() {
@@ -118,7 +176,6 @@ function movePlayer(dx, dy) {
     player.y = newY;
     draw();
 
-    // タップ時の微振動フィードバック（スマホ対応時）
     if (navigator.vibrate) navigator.vibrate(10);
 
     if (player.x === coin.x && player.y === coin.y) {
@@ -127,7 +184,7 @@ function movePlayer(dx, dy) {
   }
 }
 
-// クリア処理（ベストタイム判定・保存）
+// クリア処理
 function handleClear() {
   isCleared = true;
   clearInterval(timerInterval);
@@ -150,7 +207,6 @@ function handleClear() {
 function startContinuousMove(dx, dy) {
   movePlayer(dx, dy);
   stopContinuousMove();
-  // 初回移動後、短時間保持してから連続リピートを開始（100ms間隔）
   moveInterval = setTimeout(() => {
     moveInterval = setInterval(() => movePlayer(dx, dy), 100);
   }, 180);
@@ -164,7 +220,7 @@ function stopContinuousMove() {
   }
 }
 
-// 画面上ボタンの長押し・タッチイベント登録
+// イベントリスナー登録（十字キー・キーボード）
 document.querySelectorAll(".dpad-btn").forEach(btn => {
   const dx = parseInt(btn.dataset.dx);
   const dy = parseInt(btn.dataset.dy);
@@ -188,7 +244,6 @@ document.querySelectorAll(".dpad-btn").forEach(btn => {
   btn.addEventListener("mouseleave", end);
 });
 
-// PCキーボードの長押し連続移動対応
 window.addEventListener("keydown", (e) => {
   const keyMap = {
     "ArrowUp": [0, -1], "w": [0, -1],
