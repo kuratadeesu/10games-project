@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>フラッシュ暗算ゲーム</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <h1>フラッシュ暗算</h1>
+
+    <div id="number-display" class="display-screen">READY</div>
+
+    <div id="settings-area" class="settings">
+      <label>
+        難易度:
+        <select id="level">
+          <option value="easy">初級 (1桁)</option>
+          <option value="medium" selected>中級 (2桁)</option>
+          <option value="hard">上級 (3桁)</option>
+        </select>
+      </label>
+
+      <label>
+        出題数:
+        <select id="count">
+          <option value="3">3回</option>
+          <option value="5" selected>5回</option>
+          <option value="10">10回</option>
+        </select>
+      </label>
+
+      <label>
+        表示速度:
+        <select id="speed">
+          <option value="1.5">遅い (1.5秒)</option>
+          <option value="1.0" selected>普通 (1.0秒)</option>
+          <option value="0.5">速い (0.5秒)</option>
+          <option value="0.3">超速 (0.3秒)</option>
+        </select>
+      </label>
+
+      <button id="start-btn" class="main-btn">スタート</button>
+    </div>
+
+    <div id="input-area" class="input-area hidden">
+      <input type="number" id="user-answer" placeholder="合計を入力" readonly>
+
+      <div class="keypad">
+        <button class="key-btn" data-value="7">7</button>
+        <button class="key-btn" data-value="8">8</button>
+        <button class="key-btn" data-value="9">9</button>
+
+        <button class="key-btn" data-value="4">4</button>
+        <button class="key-btn" data-value="5">5</button>
+        <button class="key-btn" data-value="6">6</button>
+
+        <button class="key-btn" data-value="1">1</button>
+        <button class="key-btn" data-value="2">2</button>
+        <button class="key-btn" data-value="3">3</button>
+
+        <button class="key-btn action-key" id="clear-btn">C</button>
+        <button class="key-btn" data-value="0">0</button>
+        <button class="key-btn action-key" id="bs-btn">⌫</button>
+      </div>
+
+      <button id="submit-btn" class="main-btn">回答する</button>
+    </div>
+
+    <div id="result-message" class="result"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
