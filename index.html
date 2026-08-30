@@ -225,10 +225,10 @@
       <div class="game-card">
         <div>
           <span class="badge ready">NEW!</span>
-          <div class="game-title">GAME 06: フラッシュ暗算ゲーム</div>
-          <p>フラッシュ暗算を解こう！</p>
+          <div class="game-title">GAME 07: 避けゲーム</div>
+          <p>障害物を避けよう！</p>
         </div>
-        <button class="btn" onclick="showPage('game06')">プレイする</button>
+        <button class="btn" onclick="showPage('game07')">プレイする</button>
       </div>
     </section>
 
@@ -297,6 +297,16 @@
         </div>
       </div>
     </section>
+
+    <!-- 🎮 GAME 07 プレイページ -->
+    <section id="page-game07" class="page">
+      <div class="game-screen">
+        <iframe class="game-frame" src="game07/index.html" title="避けゲーム"></iframe>
+        <div style="margin-top: 1rem;">
+          <button class="btn" onclick="showPage('list')">一覧に戻る</button>
+        </div>
+      </div>
+    </section>
   </div>  
 
   <script>
@@ -307,7 +317,7 @@
       { id: 'game04', title: 'GAME 04: 数字早押し', desc: 'できるだけ早く数字を正しい順序でクリック！', ready: true },
       { id: 'game05', title: 'GAME 05: コインゲット', desc: 'できるだけ早くコインをゲットしよう！', ready: true },
       { id: 'game06', title: 'GAME 06: フラッシュ暗算ゲーム', desc: 'フラッシュ暗算を解こう！', ready: true },
-      { id: 'game07', title: 'GAME 07', desc: 'Coming Soon', ready: false },
+      { id: 'game07', title: 'GAME 07: 避けゲーム', desc: '障害物を避けよう！', ready: true },
       { id: 'game08', title: 'GAME 08', desc: 'Coming Soon', ready: false },
       { id: 'game09', title: 'GAME 09', desc: 'Coming Soon', ready: false },
       { id: 'game10', title: 'GAME 10', desc: 'Coming Soon', ready: false },

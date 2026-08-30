@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Avoidance Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="gameCanvas"></canvas>
+    
+    <div id="ui-overlay">
+      <!-- スタート画面 -->
+      <div id="start-screen" class="overlay-screen">
+        <h1>AVOID GAME</h1>
+        <p>障害物を避けてハイスコアを目指そう！</p>
+        <div id="high-score-start">HIGH SCORE: 0.0s</div>
+        <button id="start-btn" class="game-btn">START</button>
+      </div>
+
+      <!-- プレイ中UI -->
+      <div id="hud" class="hidden">
+        <div id="score">SCORE: 0.0s</div>
+        <div id="high-score-hud">BEST: 0.0s</div>
+      </div>
+
+      <!-- タッチ用ボタン (スマホ操作のガイド) -->
+      <div id="touch-controls" class="hidden">
+        <div id="btn-left" class="touch-btn">◀</div>
+        <div id="btn-right" class="touch-btn">▶</div>
+      </div>
+
+      <!-- ゲームオーバー画面 -->
+      <div id="game-over" class="overlay-screen hidden">
+        <h1>GAME OVER</h1>
+        <p id="final-score">SCORE: 0.0s</p>
+        <p id="new-record" class="hidden">🎉 NEW RECORD! 🎉</p>
+        <button id="restart-btn" class="game-btn">RETRY</button>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
