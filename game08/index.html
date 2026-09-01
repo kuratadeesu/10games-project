@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+  <title>Audio Synced Rhythm Game EX</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="game-wrapper">
+    <h1 class="title">CYBER RHYTHM EX</h1>
+    
+    <div class="setting-group">
+      <div class="setting-label">SELECT DIFFICULTY</div>
+      <div class="selector-container">
+        <button class="diff-btn" data-diff="easy">EASY</button>
+        <button class="diff-btn active" data-diff="normal">NORMAL</button>
+        <button class="diff-btn" data-diff="hard">HARD</button>
+      </div>
+    </div>
+
+    <button id="start-btn">ゲーム開始</button>
+    
+    <div class="info-panel">
+      <div id="score-board">SCORE: <span id="score">0</span></div>
+      <div id="combo-board"><span id="combo">0</span> COMBO</div>
+    </div>
+    <div id="judge-display"></div>
+    
+    <div id="game-container">
+      <div class="lane-divider" style="left: 33.3%;"></div>
+      <div class="lane-divider" style="left: 66.6%;"></div>
+      <div id="target-line"></div>
+      
+      <!-- タッチ / キーガイド -->
+      <div class="touch-zones">
+        <div class="zone" data-lane="0">D</div>
+        <div class="zone" data-lane="1">F</div>
+        <div class="zone" data-lane="2">J</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

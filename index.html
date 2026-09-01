@@ -225,10 +225,10 @@
       <div class="game-card">
         <div>
           <span class="badge ready">NEW!</span>
-          <div class="game-title">GAME 07: 避けゲーム</div>
-          <p>障害物を避けよう！</p>
+          <div class="game-title">GAME 08: リズムゲーム</div>
+          <p>音楽に合わせてキーを押そう！</p>
         </div>
-        <button class="btn" onclick="showPage('game07')">プレイする</button>
+        <button class="btn" onclick="showPage('game08')">プレイする</button>
       </div>
     </section>
 
@@ -309,6 +309,17 @@
     </section>
   </div>  
 
+    <!-- 🎮 GAME 08 プレイページ -->
+    <section id="page-game08" class="page">
+      <div class="game-screen">
+        <iframe class="game-frame" src="game08/index.html" title="リズムゲーム"></iframe>
+        <div style="margin-top: 1rem;">
+          <button class="btn" onclick="showPage('list')">一覧に戻る</button>
+        </div>
+      </div>
+    </section>
+  </div>  
+
   <script>
     const games = [
       { id: 'game01', title: 'GAME 01: クリック', desc: '制限時間内に目標を何度もクリック！', ready: true },
@@ -318,7 +329,7 @@
       { id: 'game05', title: 'GAME 05: コインゲット', desc: 'できるだけ早くコインをゲットしよう！', ready: true },
       { id: 'game06', title: 'GAME 06: フラッシュ暗算ゲーム', desc: 'フラッシュ暗算を解こう！', ready: true },
       { id: 'game07', title: 'GAME 07: 避けゲーム', desc: '障害物を避けよう！', ready: true },
-      { id: 'game08', title: 'GAME 08', desc: 'Coming Soon', ready: false },
+      { id: 'game08', title: 'GAME 08: リズムゲーム', desc: '音楽に合わせてキーを押そう！', ready: true },
       { id: 'game09', title: 'GAME 09', desc: 'Coming Soon', ready: false },
       { id: 'game10', title: 'GAME 10', desc: 'Coming Soon', ready: false },
     ];
