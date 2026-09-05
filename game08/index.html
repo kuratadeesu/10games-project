@@ -26,13 +26,15 @@
       <div id="score-board">SCORE: <span id="score">0</span></div>
       <div id="combo-board"><span id="combo">0</span> COMBO</div>
     </div>
-    <div id="judge-display"></div>
     
     <div id="game-container">
       <div class="lane-divider" style="left: 33.3%;"></div>
       <div class="lane-divider" style="left: 66.6%;"></div>
       <div id="target-line"></div>
       
+      <!-- エフェクト＆判定文字描画用キャンバス -->
+      <canvas id="effect-canvas"></canvas>
+
       <!-- タッチ / キーガイド -->
       <div class="touch-zones">
         <div class="zone" data-lane="0">D</div>
