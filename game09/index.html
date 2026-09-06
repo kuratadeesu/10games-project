@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ボールをゴールに入れろ！ - 高難易度版</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="game-container">
+    <canvas id="canvas"></canvas>
+    
+    <div id="ui">
+      <div id="stage-text">STAGE 1</div>
+      <div id="msg">障害物を避けてゴールを目指そう！</div>
+      
+      <!-- インクゲージ -->
+      <div id="ink-bar-container">
+        <div id="ink-bar"></div>
+      </div>
+    </div>
+    
+    <div id="controls">
+      <button id="start-btn">スタート</button>
+      <button id="reset-btn">やり直し</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
