@@ -271,19 +271,20 @@ function createHitEffect(lane, judgeText = '', color = '#00f3ff') {
     });
   }
 
-  // ノーツ位置のすぐ上に表示する判定テキスト
+  // ノーツ位置のすぐ上に表示する判定テキスト＆コンボ数
   if (judgeText) {
-    // 同じレーンの既存のテキストを置き換え
+    // 同じレーンの既存テキストを置き換え
     judgeTexts = judgeTexts.filter(t => t.lane !== lane);
 
     judgeTexts.push({
       lane: lane,
       text: judgeText,
+      combo: combo > 1 ? `${combo} COMBO` : '', // 2コンボ以上で表示
       x: x,
-      y: TARGET_Y - 20, // 判定ラインの少し上
+      y: TARGET_Y - 25, // 判定ラインの少し上
       alpha: 1.0,
       color: color,
-      scale: 1.4
+      scale: 1.3
     });
   }
 }
@@ -331,22 +332,34 @@ function drawEffects() {
     }
   }
 
-  // 3. レーン上の判定テキスト描画（浮かび上がりながら消える）
+  // 3. レーン上の判定テキスト＆コンボ数描画（浮かび上がりながらフェードアウト）
   for (let i = judgeTexts.length - 1; i >= 0; i--) {
     const t = judgeTexts[i];
     ctx.save();
     ctx.globalAlpha = t.alpha;
-    ctx.font = `900 ${Math.round(14 * t.scale)}px sans-serif`;
     ctx.textAlign = 'center';
+
+    // メイン判定文字（PERFECT! など）
+    ctx.font = `900 ${Math.round(14 * t.scale)}px sans-serif`;
     ctx.fillStyle = t.color;
     ctx.shadowBlur = 10;
     ctx.shadowColor = t.color;
     ctx.fillText(t.text, t.x, t.y);
+
+    // サブコンボ表示（12 COMBO など）
+    if (t.combo) {
+      ctx.font = `800 ${Math.round(10 * t.scale)}px sans-serif`;
+      ctx.fillStyle = '#ffffff';
+      ctx.shadowBlur = 6;
+      ctx.shadowColor = '#ff007f';
+      ctx.fillText(t.combo, t.x, t.y + 14); // 判定文字のすぐ下に表示
+    }
+
     ctx.restore();
 
     t.y -= 0.8; // ゆっくり上昇
-    t.alpha -= 0.03; // フェードアウト
-    if (t.scale > 1.0) t.scale -= 0.05; // 拡大スケーリングの収束
+    t.alpha -= 0.035; // フェードアウト
+    if (t.scale > 1.0) t.scale -= 0.04; // スケーリング収束
 
     if (t.alpha <= 0) {
       judgeTexts.splice(i, 1);
