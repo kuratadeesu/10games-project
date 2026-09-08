@@ -12,6 +12,7 @@ const CANVAS_HEIGHT = 600;
 
 // ゲーム状態
 let currentStage = 1;
+let currentStageData = null; // 現在のステージ構造を保持
 let ball, goal, lines, isDrawing, currentLineSegments, isCleared, isGameOver, isGameStarted;
 
 // ギミック要素
@@ -19,7 +20,7 @@ let walls = [];        // 跳ね返る壁
 let spikes = [];       // 接触でミスになるトゲ
 let noDrawZones = [];  // 線を描けない描画禁止ゾーン
 
-// インクパラメータ（少し増量して描きやすく）
+// インクパラメータ（たっぷり描けるよう増量）
 const MAX_INK = 600;
 let remainingInk = MAX_INK;
 
@@ -41,9 +42,9 @@ function isRectOverlap(r1, r2) {
            r2.y + r2.h < r1.y);
 }
 
-// ステージとギミックの自動生成
-function setupStage() {
-  ball = {
+// ステージ構造のランダム生成（初心者向けに優しく生成）
+function generateStageData() {
+  const startBall = {
     x: 100,
     y: 100,
     vx: 0,
@@ -51,59 +52,78 @@ function setupStage() {
     radius: BALL_RADIUS
   };
 
-  // 1. ゴールの位置を広範囲（画面中央〜右エリア）に自由に配置＆サイズ拡大
-  goal = {
-    x: 300 + Math.random() * 420,
-    y: 100 + Math.random() * 400,
-    radius: 42
+  const newGoal = {
+    x: 500 + Math.random() * 220,
+    y: 250 + Math.random() * 250,
+    radius: 45 // ゴール判定を大きめにして入りやすく
   };
 
-  const ballRect = { x: ball.x - 40, y: ball.y - 40, w: 80, h: 80 };
-  const goalRect = { x: goal.x - 50, y: goal.y - 50, w: 100, h: 100 };
+  const ballRect = { x: startBall.x - 40, y: startBall.y - 40, w: 80, h: 80 };
+  const goalRect = { x: newGoal.x - 50, y: newGoal.y - 50, w: 100, h: 100 };
 
-  // 配列を初期化
-  walls = [];
-  spikes = [];
-  noDrawZones = [];
+  const newWalls = [];
+  const newSpikes = [];
+  const newNoDrawZones = [];
 
-  // 2. 「壁」を0〜1個だけ配置（数を減らしてシンプルに）
-  if (Math.random() < 0.7) {
-    const w = 25 + Math.random() * 25;
-    const h = 100 + Math.random() * 120;
-    const x = 220 + Math.random() * 300;
-    const y = 120 + Math.random() * 250;
-    const newWall = { x, y, w, h };
-
-    if (!isRectOverlap(newWall, ballRect) && !isRectOverlap(newWall, goalRect)) {
-      walls.push(newWall);
-    }
-  }
-
-  // 3. 「トゲ（危険ゾーン）」を0〜1個だけ配置（控えめなサイズ）
-  if (Math.random() < 0.6) {
-    const w = 70 + Math.random() * 80;
-    const h = 20 + Math.random() * 20;
-    const x = 200 + Math.random() * 350;
-    const y = 200 + Math.random() * 280;
-    const newSpike = { x, y, w, h };
-
-    if (!isRectOverlap(newSpike, ballRect) && !isRectOverlap(newSpike, goalRect)) {
-      spikes.push(newSpike);
-    }
-  }
-
-  // 4. 「描画禁止ゾーン」を0〜1個だけ配置
+  // 1. 壁の配置（50%の確率で1個だけ、小さめ）
   if (Math.random() < 0.5) {
-    const ndWidth = 100 + Math.random() * 80;
-    const ndHeight = 120 + Math.random() * 100;
-    const ndX = 250 + Math.random() * 280;
-    const ndY = 150 + Math.random() * 220;
-    const newZone = { x: ndX, y: ndY, w: ndWidth, h: ndHeight };
+    const wallW = 20 + Math.random() * 20;
+    const wallH = 80 + Math.random() * 80;
+    const wallX = 350 + Math.random() * 120;
+    const wallY = 200 + Math.random() * 100;
+    const mainWall = { x: wallX, y: wallY, w: wallW, h: wallH };
 
-    if (!isRectOverlap(newZone, ballRect) && !isRectOverlap(newZone, goalRect)) {
-      noDrawZones.push(newZone);
+    if (!isRectOverlap(mainWall, ballRect) && !isRectOverlap(mainWall, goalRect)) {
+      newWalls.push(mainWall);
     }
   }
+
+  // 2. トゲの配置（40%の確率で1個だけ、小サイズ）
+  if (Math.random() < 0.4) {
+    const spikeW = 50 + Math.random() * 50;
+    const spikeH = 15;
+    const spikeX = 300 + Math.random() * 200;
+    const spikeY = 450 + Math.random() * 80;
+    const mainSpike = { x: spikeX, y: spikeY, w: spikeW, h: spikeH };
+
+    if (!isRectOverlap(mainSpike, ballRect) && !isRectOverlap(mainSpike, goalRect)) {
+      newSpikes.push(mainSpike);
+    }
+  }
+
+  // 3. 描画禁止ゾーン（30%の確率で1個だけ、小サイズ）
+  if (Math.random() < 0.3) {
+    const ndWidth = 70 + Math.random() * 50;
+    const ndHeight = 70 + Math.random() * 50;
+    const ndX = 300 + Math.random() * 150;
+    const ndY = 150 + Math.random() * 150;
+    const mainZone = { x: ndX, y: ndY, w: ndWidth, h: ndHeight };
+
+    if (!isRectOverlap(mainZone, ballRect) && !isRectOverlap(mainZone, goalRect)) {
+      newNoDrawZones.push(mainZone);
+    }
+  }
+
+  currentStageData = {
+    ball: startBall,
+    goal: newGoal,
+    walls: newWalls,
+    spikes: newSpikes,
+    noDrawZones: newNoDrawZones
+  };
+}
+
+// ステージのセットアップ（やり直し時は同じステージ）
+function setupStage(isRetry = false) {
+  if (!isRetry || !currentStageData) {
+    generateStageData();
+  }
+
+  ball = { ...currentStageData.ball, vx: 0, vy: 0 };
+  goal = { ...currentStageData.goal };
+  walls = JSON.parse(JSON.stringify(currentStageData.walls));
+  spikes = JSON.parse(JSON.stringify(currentStageData.spikes));
+  noDrawZones = JSON.parse(JSON.stringify(currentStageData.noDrawZones));
 
   lines = [];
   currentLineSegments = [];
@@ -114,7 +134,7 @@ function setupStage() {
   remainingInk = MAX_INK;
 
   stageText.innerText = `STAGE ${currentStage}`;
-  msg.innerText = "線を描いてから「スタート」を押してね！";
+  msg.innerText = "坂道を描いて「スタート」を押そう！";
   msg.style.color = "#ffffff";
   startBtn.innerText = "スタート";
   updateInkUI();
@@ -163,7 +183,7 @@ function update() {
     spikes.forEach(s => {
       if (checkRectOverlap(ball, s)) {
         isGameOver = true;
-        msg.innerText = "GAME OVER... 💀 リトライしてね";
+        msg.innerText = "GAME OVER... 💀 やり直してみてね";
         msg.style.color = "#ff4757";
       }
     });
@@ -184,7 +204,7 @@ function update() {
 
   // --- 描画処理 ---
 
-  // 描画禁止ゾーン（赤い透明領域）
+  // 描画禁止ゾーン
   noDrawZones.forEach(zone => {
     ctx.fillStyle = 'rgba(255, 71, 87, 0.15)';
     ctx.fillRect(zone.x, zone.y, zone.w, zone.h);
@@ -311,22 +331,30 @@ function checkLineCollision(circle, line) {
   }
 }
 
-// 座標取得
+// スマホ（タッチ）座標補正
 function getCanvasPos(e) {
   const rect = canvas.getBoundingClientRect();
-  const scaleX = CANVAS_WIDTH / rect.width;
-  const scaleY = CANVAS_HEIGHT / rect.height;
+  
+  const clientX = e.touches && e.touches.length > 0 ? e.touches[0].clientX : e.clientX;
+  const clientY = e.touches && e.touches.length > 0 ? e.touches[0].clientY : e.clientY;
 
-  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  const touchX = clientX - rect.left;
+  const touchY = clientY - rect.top;
 
-  return {
-    x: (clientX - rect.left) * scaleX,
-    y: (clientY - rect.top) * scaleY
-  };
+  const scale = Math.min(rect.width / CANVAS_WIDTH, rect.height / CANVAS_HEIGHT);
+  const actualWidth = CANVAS_WIDTH * scale;
+  const actualHeight = CANVAS_HEIGHT * scale;
+
+  const offsetX = (rect.width - actualWidth) / 2;
+  const offsetY = (rect.height - actualHeight) / 2;
+
+  const x = (touchX - offsetX) / scale;
+  const y = (touchY - offsetY) / scale;
+
+  return { x, y };
 }
 
-// 描画禁止エリア内かどうかの判定
+// 描画禁止エリア内判定
 function isInNoDrawZone(pos) {
   return noDrawZones.some(zone => 
     pos.x >= zone.x &&
@@ -352,7 +380,10 @@ function drawMove(e) {
   if (!isDrawing || remainingInk <= 0) return;
 
   const pos = getCanvasPos(e);
-  if (isInNoDrawZone(pos)) return;
+  if (isInNoDrawZone(pos)) {
+    stopDrawing();
+    return;
+  }
 
   const dx = pos.x - this.lastPos.x;
   const dy = pos.y - this.lastPos.y;
@@ -404,7 +435,7 @@ window.addEventListener('touchend', stopDrawing);
 startBtn.addEventListener('click', () => {
   if (isCleared) {
     currentStage++;
-    setupStage();
+    setupStage(false);
   } else if (!isGameStarted) {
     isGameStarted = true;
     msg.innerText = "ゴールを目指そう！";
@@ -412,10 +443,10 @@ startBtn.addEventListener('click', () => {
 });
 
 resetBtn.addEventListener('click', () => {
-  setupStage();
+  setupStage(true); // 同じステージでリトライ
 });
 
 // 初期化
 setupCanvas();
-setupStage();
+setupStage(false);
 update();
